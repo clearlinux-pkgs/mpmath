@@ -4,7 +4,7 @@
 #
 Name     : mpmath
 Version  : 1.0.0
-Release  : 1
+Release  : 2
 URL      : https://files.pythonhosted.org/packages/7a/05/b3d1472885d8dc0606936ea5da0ccb1b4785682e78ab15e34ada24aea8d5/mpmath-1.0.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/7a/05/b3d1472885d8dc0606936ea5da0ccb1b4785682e78ab15e34ada24aea8d5/mpmath-1.0.0.tar.gz
 Summary  : Python library for arbitrary-precision floating-point arithmetic
