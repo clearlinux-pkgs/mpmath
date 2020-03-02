@@ -4,7 +4,7 @@
 #
 Name     : mpmath
 Version  : 1.1.0
-Release  : 9
+Release  : 10
 URL      : https://files.pythonhosted.org/packages/ca/63/3384ebb3b51af9610086b23ea976e6d27d6d97bf140a76a365bd77a3eb32/mpmath-1.1.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/ca/63/3384ebb3b51af9610086b23ea976e6d27d6d97bf140a76a365bd77a3eb32/mpmath-1.1.0.tar.gz
 Summary  : Python library for arbitrary-precision floating-point arithmetic
@@ -39,6 +39,7 @@ python components for the mpmath package.
 Summary: python3 components for the mpmath package.
 Group: Default
 Requires: python3-core
+Provides: pypi(mpmath)
 
 %description python3
 python3 components for the mpmath package.
@@ -46,20 +47,28 @@ python3 components for the mpmath package.
 
 %prep
 %setup -q -n mpmath-1.1.0
+cd %{_builddir}/mpmath-1.1.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1544713199
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583174649
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mpmath
-cp LICENSE %{buildroot}/usr/share/package-licenses/mpmath/LICENSE
+cp %{_builddir}/mpmath-1.1.0/LICENSE %{buildroot}/usr/share/package-licenses/mpmath/01ee18d99c3880ba79a5032ebb9ba7ef9cd1f1cf
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -70,7 +79,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/mpmath/LICENSE
+/usr/share/package-licenses/mpmath/01ee18d99c3880ba79a5032ebb9ba7ef9cd1f1cf
 
 %files python
 %defattr(-,root,root,-)
